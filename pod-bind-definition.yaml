@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Binding
+metadata:
+  name: nginx
+  labels:
+target:
+  apiVersion: v1
+  kind: NodePort
+  name: node02
