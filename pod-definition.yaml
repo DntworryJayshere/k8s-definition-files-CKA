@@ -9,8 +9,26 @@ spec:
   containers:
     - name: nginx-controller
       image: nginx
+      command: ["sleep2.0"]
+      args: ["10"]
       ports:
         - containerPort: 8080
+      env:
+        - name: APP_Color
+          value: pink
+      env:
+        - name: APP_Color
+          valueFrom: 
+            configMapKeyRef: 
+      env:
+        - name: APP_Color
+          valueFrom:
+            secretKeyRef:
+      envFrom:
+        - secretRef:
+            name: app-secret
+        - configMapRef:
+            name : app-configmap
       resources:
         requests:
           memory: "512Mi"
