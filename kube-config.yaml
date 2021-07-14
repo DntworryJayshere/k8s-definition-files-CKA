@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Config
+current-context: admin-user@my-kube-playground
+
+clusters:
+  - cluster:
+      certificate-authority: /etc/kubernetes/pki/ca.crt # better to use the full/absolute path
+      # certificate-authority-data: | cat ca.crt | base64        can optionally use encoded data field 
+      server: https://my-kube-playground:6443
+    name: my-kube-playground
+  - cluster:
+      certificate-authority: ca.crt
+      server: https://production:6443
+    name: production
+  - cluster:
+      certificate-authority: ca.crt
+      server: https://development:6443
+    name: development
+
+users:
+  - name: my-kube-admin
+    user:
+      client-certificate: admin.crt
+      client-key: admin.key
+ - name: admin-user
+    user:
+      client-certificate: admin-user.crt
+      client-key: admin-user.key
+ - name: dev-user
+    user:
+      client-certificate: dev-user.crt
+      client-key: dev-user.key
+ - name: prod-user
+    user:
+      client-certificate: prod-user.crt
+      client-key: prod-user.key
+
+contexts:
+  - context:
+      cluster: my-kube-playground
+      user: my-kube-admin
+      namespace: playground # can include additional parameter of namespace
+    name: my-kube-admin@my-kube-playground
+  - context:
+      cluster: development
+      user: admin-user
+    name: admin-user@development
+  - context:
+      cluster: production
+      user: admin-user
+    name: admin-user@production
+  - context:
+      cluster: development
+      user: dev-user
+    name: dev-user@development
+  - context:
+      cluster: production
+      user: prod-user
+    name: prod-user@production
+

@@ -1,0 +1,13 @@
+apiVersion: certificates.k8s.io.v1beta1
+kind: CertificateSiginingRequest
+metadata:
+  name: Jay
+spec:
+  groups:
+    - system: authenticated
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  request: cat jay.csr | base64
+    only include encoded text
